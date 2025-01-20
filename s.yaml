@@ -1,4 +1,5 @@
 edition: '1.0.0'
+
 name: MagicQuill CI/CD
 
 on:
@@ -28,8 +29,21 @@ jobs:
     - name: Run tests
       run: pytest
 
-    - name: Build and deploy
-      if: github.ref == 'refs/heads/main'
-      run: |
-        # Add your deployment commands here
-        echo "Deploying to production..."
+services:
+  your-service-name:
+    component: fc
+    props:
+      region: cn-hangzhou
+      account:
+        accessKeyId: ${env:ALIYUN_ACCESS_KEY_ID}
+        accessKeySecret: ${env:ALIYUN_ACCESS_KEY_SECRET}
+      service:
+        name: your-service-name
+        description: Your service description
+      function:
+        name: your-function-name
+        runtime: python3
+        handler: index.handler
+        codeUri: ./
+        memorySize: 512
+        timeout: 60
